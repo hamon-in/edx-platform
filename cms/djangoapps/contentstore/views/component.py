@@ -126,7 +126,8 @@ def container_handler(request, usage_key_string):
             while parent and parent.category != 'course':
                 if unit is None and is_unit(parent):
                     unit = parent
-                ancestor_xblocks.append(parent)
+
+                ancestor_xblocks.append((parent, parent.get_children()))
                 parent = get_parent_xblock(parent)
             ancestor_xblocks.reverse()
 

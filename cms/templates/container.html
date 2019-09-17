@@ -63,19 +63,32 @@ from openedx.core.djangolib.markup import HTML, Text
 
 <div class="wrapper-mast wrapper">
     <header class="mast has-actions has-navigation has-subtitle">
-        <div class="page-header">
-            <small class="navigation navigation-parents subtitle">
-                % for ancestor in ancestor_xblocks:
+        <div class="">
+            <nav class="nav-dd title ui-left">
+                <ol>
+                % for ancestor, children in ancestor_xblocks:
                     <%
                     ancestor_url = xblock_studio_url(ancestor)
                     %>
-                    % if ancestor_url:
-                        <a href="${ancestor_url}" class="navigation-item navigation-link navigation-parent">${ancestor.display_name_with_default}</a>
-                    % else:
-                        <span class="navigation-item navigation-parent">${ancestor.display_name_with_default}</span>
-                    % endif
+                    <li class="nav-item" style="display:inline-block;color:blue;margin-bottom:20px">
+                        <span class="title label">${ancestor.display_name_with_default}</span>
+                        <span class="icon fa fa-caret-down ui-toggle-dd" aria-hidden="true"></span>
+                        <span style="margin-right:20px;margin-left:10px;font-size:24px"> &rsaquo;</span>
+                        <div class="wrapper wrapper-nav-sub" style="top:30px; z-index:100">
+                            <div class="nav-sub">
+                                <ul>
+                                % for child in children:
+                                <li class="nav-item">
+                                    <a href="${xblock_studio_url(child)}">${child.display_name_with_default}</a>
+                                </li>
+                                % endfor
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
                 % endfor
-            </small>
+                </ol>
+            </nav>
             <div class="wrapper-xblock-field incontext-editor is-editable"
                  data-field="display_name" data-field-display-name="${_("Display Name")}">
                 <h1 class="page-header-title xblock-field-value incontext-editor-value"><span class="title-value">${xblock.display_name_with_default}</span></h1>
@@ -158,12 +171,12 @@ from openedx.core.djangolib.markup import HTML, Text
                                 <span class="tip"><span class="sr">Tip: </span>${Text(_('To create a link to this unit from an HTML component in this course, enter "/jump_to_id/<location ID>" as the URL value.'))}</span>
                             </p>
                         </div>
-                        <div class="wrapper-unit-tree-location bar-mod-content">
+<!--                         <div class="wrapper-unit-tree-location bar-mod-content">
                             <h5 class="title">${_("Location in Course Outline")}</h5>
                             <div class="wrapper-unit-overview outline outline-simple">
                             </div>
                         </div>
-                    </div>
+ -->                    </div>
                 % endif
             </aside>
         </section>
