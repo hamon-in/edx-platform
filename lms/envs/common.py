@@ -768,6 +768,7 @@ STATIC_ROOT_BASE = '/edx/var/edxapp/staticfiles'
 LOGGING_ENV = 'sandbox'
 
 EDX_ROOT_URL = ''
+EDX_API_KEY = "PUT_YOUR_API_KEY_HERE"
 
 LOGIN_REDIRECT_URL = EDX_ROOT_URL + '/login'
 LOGIN_URL = EDX_ROOT_URL + '/login'
@@ -782,7 +783,7 @@ LOCAL_LOGLEVEL = "INFO"
 
 LOG_DIR = '/edx/var/log/edx'
 
-DATA_DIR = '/edx/app/edxapp'
+DATA_DIR = '/edx/var/edxapp/data'
 
 MAINTENANCE_BANNER_TEXT = 'Sample banner message'
 
@@ -790,7 +791,7 @@ GIT_REPO_DIR = '/edx/var/edxapp/course_repos'
 
 DJFS = {
     'type': 'osfs',
-    'directory_root': '/edx/app/edxapp/django-pyfs/static/django-pyfs',
+    'directory_root': '/edx/var/edxapp/django-pyfs/static/django-pyfs',
     'url_root': '/static/django-pyfs',
 }
 
@@ -935,6 +936,7 @@ TRACKING_SEGMENTIO_SOURCE_MAP = {
 GOOGLE_ANALYTICS_ACCOUNT = None
 GOOGLE_SITE_VERIFICATION_ID = ''
 GOOGLE_ANALYTICS_LINKEDIN = 'GOOGLE_ANALYTICS_LINKEDIN_DUMMY'
+#GOOGLE_ANALYTICS_TRACKING_ID = ""
 
 ######################## BRANCH.IO ###########################
 BRANCH_IO_KEY = ''
@@ -972,12 +974,22 @@ XBLOCK_SETTINGS = {}
 MODULESTORE_BRANCH = 'published-only'
 
 DOC_STORE_CONFIG = {
+    'db': 'edxapp',
     'host': 'localhost',
-    'db': 'xmodule',
+    'replicaSet': '',
+    'password': 'password',
+    'port': 27017,
+    'user': 'edxapp',
     'collection': 'modulestore',
-    # If 'asset_collection' defined, it'll be used
-    # as the collection name for asset metadata.
-    # Otherwise, a default collection name will be used.
+    'ssl': False,
+    # https://api.mongodb.com/python/2.9.1/api/pymongo/mongo_client.html#module-pymongo.mongo_client
+    # default is never timeout while the connection is open,
+    #this means it needs to explicitly close raising pymongo.errors.NetworkTimeout
+    'socketTimeoutMS': 3000,
+    'connectTimeoutMS': 2000,  # default is 20000, I believe raises pymongo.errors.ConnectionFailure
+    # Not setting waitQueueTimeoutMS and waitQueueMultiple since pymongo defaults to nobody being allowed to wait
+    'auth_source': None,
+    'read_preference': 'SECONDARY_PREFERRED'
 }
 
 CONTENTSTORE = {
@@ -987,10 +999,11 @@ CONTENTSTORE = {
     'OPTIONS': {
         'db': 'edxapp',
         'host': 'localhost',
-        'password': 'edxapp',
+        'password': 'password',
         'port': 27017,
         'user': 'edxapp',
-        'ssl': False
+        'ssl': False,
+        'auth_source': None
     },
     'ADDITIONAL_OPTIONS': {},
     'DOC_STORE_CONFIG': DOC_STORE_CONFIG
@@ -1046,7 +1059,7 @@ DATABASES = {
         'CONN_MAX_AGE': 0,
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
-        'NAME': 'dxapp',
+        'NAME': 'edxapp',
         'OPTIONS': {},
         'PASSWORD': 'password',
         'PORT': '3306',
@@ -1060,7 +1073,7 @@ DATABASES = {
         'OPTIONS': {},
         'PASSWORD': 'password',
         'PORT': '3306',
-        'USER': 'edxapp'
+        'USER': 'edxapp001'
     }
 }
 
@@ -1304,6 +1317,11 @@ TRANSLATORS_GUIDE = 'https://edx.readthedocs.org/projects/edx-developer-guide/en
 AWS_QUERYSTRING_EXPIRE = 10 * 365 * 24 * 60 * 60  # 10 years
 AWS_SES_REGION_NAME = 'us-east-1'
 AWS_SES_REGION_ENDPOINT = 'email.us-east-1.amazonaws.com'
+AWS_ACCESS_KEY_ID = None
+AWS_SECRET_ACCESS_KEY = None
+AWS_QUERYSTRING_AUTH = False
+AWS_STORAGE_BUCKET_NAME = "SET-ME-PLEASE (ex. bucket-name)"
+AWS_S3_CUSTOM_DOMAIN = "SET-ME-PLEASE (ex. bucket-name.s3.amazonaws.com)"
 
 ################################# SIMPLEWIKI ###################################
 SIMPLE_WIKI_REQUIRE_LOGIN_EDIT = True
@@ -1364,8 +1382,8 @@ PAYMENT_REPORT_GENERATOR_GROUP = 'shoppingcart_report_access'
 ################################# EdxNotes config  #########################
 
 # Configure the LMS to use our stub EdxNotes implementation
-EDXNOTES_PUBLIC_API = 'http://localhost:8120/api/v1'
-EDXNOTES_INTERNAL_API = 'http://localhost:8120/api/v1'
+EDXNOTES_PUBLIC_API = 'http://localhost:18120/api/v1'
+EDXNOTES_INTERNAL_API = 'http://localhost:18120/api/v1'
 
 EDXNOTES_CONNECT_TIMEOUT = 0.5  # time in seconds
 EDXNOTES_READ_TIMEOUT = 1.5  # time in seconds
@@ -2162,7 +2180,7 @@ BULK_EMAIL_ROUTING_KEY = HIGH_PRIORITY_QUEUE
 
 # We also define a queue for smaller jobs so that large courses don't block
 # smaller emails (see BULK_EMAIL_JOB_SIZE_THRESHOLD setting)
-BULK_EMAIL_ROUTING_KEY_SMALL_JOBS = DEFAULT_PRIORITY_QUEUE
+BULK_EMAIL_ROUTING_KEY_SMALL_JOBS = 'edx.lms.core.default'
 
 # For emails with fewer than these number of recipients, send them through
 # a different queue to avoid large courses blocking emails that are meant to be
@@ -2678,6 +2696,9 @@ SOCIAL_MEDIA_FOOTER_DISPLAY = {
     }
 }
 
+#################SOCAIL AUTH OAUTH######################
+SOCIAL_AUTH_OAUTH_SECRETS = {}
+
 ################# Mobile URLS ##########################
 
 # These are URLs to the app store for mobile.
@@ -3180,7 +3201,7 @@ NOTES_DISABLED_TABS = ['course_structure', 'tags']
 PDF_RECEIPT_TAX_ID = '00-0000000'
 PDF_RECEIPT_FOOTER_TEXT = 'Enter your receipt footer text here.'
 PDF_RECEIPT_DISCLAIMER_TEXT = 'ENTER YOUR RECEIPT DISCLAIMER TEXT HERE.'
-PDF_RECEIPT_BILLING_ADDRESS = 'Enter your receipt terms and conditions here.'
+PDF_RECEIPT_BILLING_ADDRESS = 'Enter your receipt billing address here.'
 PDF_RECEIPT_TERMS_AND_CONDITIONS = 'Enter your receipt terms and conditions here.'
 PDF_RECEIPT_TAX_ID_LABEL = 'fake Tax ID'
 PDF_RECEIPT_LOGO_PATH = PROJECT_ROOT + '/static/images/openedx-logo-tag.png'
@@ -3290,7 +3311,7 @@ ECOMMERCE_API_SIGNING_KEY = 'SET-ME-PLEASE'
 COURSE_CATALOG_API_URL = 'http://localhost:8008/api/v1'
 
 CREDENTIALS_INTERNAL_SERVICE_URL = 'http://localhost:8005'
-CREDENTIALS_PUBLIC_SERVICE_URL = None
+CREDENTIALS_PUBLIC_SERVICE_URL = 'http://localhost:8005'
 
 COMMENTS_SERVICE_URL = 'http://localhost:18080'
 COMMENTS_SERVICE_KEY = 'password'
@@ -3368,7 +3389,7 @@ CREDIT_PROVIDER_SECRET_KEYS = {}
 CREDIT_PROVIDER_TIMESTAMP_EXPIRATION = 15 * 60
 
 # The Help link to the FAQ page about the credit
-CREDIT_HELP_LINK_URL = "/"
+CREDIT_HELP_LINK_URL = ""
 
 # Default domain for the e-mail address associated with users who are created
 # via the LTI Provider feature. Note that the generated e-mail addresses are
@@ -3484,7 +3505,7 @@ CREDENTIALS_SERVICE_USERNAME = 'credentials_service_user'
 CREDENTIALS_GENERATION_ROUTING_KEY = DEFAULT_PRIORITY_QUEUE
 
 # Queue to use for award program certificates
-PROGRAM_CERTIFICATES_ROUTING_KEY = DEFAULT_PRIORITY_QUEUE
+PROGRAM_CERTIFICATES_ROUTING_KEY = 'edx.lms.core.default'
 
 # Settings for Comprehensive Theming app
 
@@ -3545,6 +3566,7 @@ ENTERPRISE_COURSE_ENROLLMENT_AUDIT_MODES = ['audit', 'honor']
 ENTERPRISE_SUPPORT_URL = ''
 ENTERPRISE_CUSTOMER_CATALOG_DEFAULT_CONTENT_FILTER = {}
 ENTERPRISE_CUSTOMER_SUCCESS_EMAIL = "customersuccess@edx.org"
+ENTERPRISE_INTEGRATIONS_EMAIL = "enterprise-integrations@edx.org"
 
 ############## ENTERPRISE SERVICE API CLIENT CONFIGURATION ######################
 # The LMS communicates with the Enterprise service via the EdxRestApiClient class
@@ -3739,6 +3761,8 @@ ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME = None
 ACE_ROUTING_KEY = 'edx.lms.core.default'
 ACE_CHANNEL_DEFAULT_EMAIL = 'django_email'
 ACE_CHANNEL_TRANSACTIONAL_EMAIL = 'django_email'
+ACE_CHANNEL_SAILTHRU_API_KEY = ""
+ACE_CHANNEL_SAILTHRU_API_SECRET = ""
 
 ############### Settings swift #####################################
 SWIFT_USERNAME = None
@@ -3803,3 +3827,17 @@ SOCIAL_AUTH_SAML_SP_PUBLIC_CERT_DICT = {}
 ######################### rate limit for yt_video_metadata api ############
 
 RATE_LIMIT_FOR_VIDEO_METADATA_API = '10/minute'
+
+########################## MAILCHIMP SETTINGS #################################
+#MAILCHIMP_NEW_USER_LIST_ID = ""
+
+########################## BLOCKSTORE #####################################
+BLOCKSTORE_PUBLIC_URL_ROOT = 'http://localhost:18250'
+BLOCKSTORE_API_URL = 'http://localhost:18250/api/v1'
+
+########################## LEARNER PORTAL ##############################
+LEARNER_PORTAL_URL_ROOT = 'https://learner-portal-localhost:18000'
+
+######################### MICROSITE ###############################
+MICROSITE_ROOT_DIR = '/edx/app/edxapp/edx-microsite'
+MICROSITE_CONFIGURATION = {}
