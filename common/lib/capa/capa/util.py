@@ -109,6 +109,8 @@ def contextualize_text(text, context):  # private
 
     if not text:
         return text
+    if isinstance(text, bytes):
+        text = text.decode('utf-8')
 
     for key in sorted(context, key=len, reverse=True):
         # TODO (vshnayder): This whole replacement thing is a big hack
