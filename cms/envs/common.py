@@ -313,25 +313,25 @@ FEATURES = {
     # Prevent auto auth from creating superusers or modifying existing users
     'RESTRICT_AUTOMATIC_AUTH': True,
 
-    'AUTH_USE_OPENID_PROVIDER': True,
-    'ENABLE_INSTRUCTOR_ANALYTICS': False,
-    'PREVIEW_LMS_BASE': "preview.localhost:18000",
-    'ENABLE_GRADE_DOWNLOADS': True,
-    'ENABLE_MKTG_SITE': False,
-    'ENABLE_THIRD_PARTY_AUTH': True,
-    'ENABLE_DISCUSSION_HOME_PANEL': True,
-    'ENABLE_COMBINED_LOGIN_REGISTRATION': True,
-    'ENABLE_CORS_HEADERS': False,
-    'ENABLE_CROSS_DOMAIN_CSRF_COOKIE': False,
-    'ENABLE_COUNTRY_ACCESS': False,
-    'ENABLE_CREDIT_API': False,
-    'ENABLE_OAUTH2_PROVIDER': False,
-    'ENABLE_SYSADMIN_DASHBOARD': False,
-    'ENABLE_MOBILE_REST_API': False,
-    'CUSTOM_COURSES_EDX': False,
-    'ENABLE_READING_FROM_MULTIPLE_HISTORY_TABLES': True,
-    'SHOW_FOOTER_LANGUAGE_SELECTOR': False,
-    'ENABLE_ENROLLMENT_RESET': False,
+    # 'AUTH_USE_OPENID_PROVIDER': True,
+    # 'ENABLE_INSTRUCTOR_ANALYTICS': False,
+    # 'PREVIEW_LMS_BASE': "preview.localhost:18000",
+    # 'ENABLE_GRADE_DOWNLOADS': True,
+    # 'ENABLE_MKTG_SITE': False,
+    # 'ENABLE_THIRD_PARTY_AUTH': True,
+    # 'ENABLE_DISCUSSION_HOME_PANEL': True,
+    # 'ENABLE_COMBINED_LOGIN_REGISTRATION': True,
+    # 'ENABLE_CORS_HEADERS': False,
+    # 'ENABLE_CROSS_DOMAIN_CSRF_COOKIE': False,
+    # 'ENABLE_COUNTRY_ACCESS': False,
+    # 'ENABLE_CREDIT_API': False,
+    # 'ENABLE_OAUTH2_PROVIDER': False,
+    # 'ENABLE_SYSADMIN_DASHBOARD': False,
+    # 'ENABLE_MOBILE_REST_API': False,
+    # 'CUSTOM_COURSES_EDX': False,
+    # 'ENABLE_READING_FROM_MULTIPLE_HISTORY_TABLES': True,
+    # 'SHOW_FOOTER_LANGUAGE_SELECTOR': False,
+    # 'ENABLE_ENROLLMENT_RESET': False,
 
 }
 
@@ -345,10 +345,10 @@ IDA_LOGOUT_URI_LIST = []
 SOCIAL_SHARING_SETTINGS = {
     # Note: Ensure 'CUSTOM_COURSE_URLS' has a matching value in lms/envs/common.py
     'CUSTOM_COURSE_URLS': False,
-    'DASHBOARD_FACEBOOK': False,
-    'CERTIFICATE_FACEBOOK': False,
-    'CERTIFICATE_TWITTER': False,
-    'DASHBOARD_TWITTER': False,
+    # 'DASHBOARD_FACEBOOK': False,
+    # 'CERTIFICATE_FACEBOOK': False,
+    # 'CERTIFICATE_TWITTER': False,
+    # 'DASHBOARD_TWITTER': False,
 }
 
 SOCIAL_MEDIA_FOOTER_URLS = {}
@@ -378,11 +378,11 @@ GEOIP_PATH = REPO_ROOT / "common/static/data/geoip/GeoLite2-Country.mmdb"
 
 DATA_DIR = COURSES_ROOT
 
-DJFS = {
-    'type': 'osfs',
-    'directory_root': '/edx/var/edxapp/django-pyfs/static/django-pyfs',
-    'url_root': '/static/django-pyfs',
-}
+# DJFS = {
+#     'type': 'osfs',
+#     'directory_root': '/edx/var/edxapp/django-pyfs/static/django-pyfs',
+#     'url_root': '/static/django-pyfs',
+# }
 ######################## BRANCH.IO ###########################
 BRANCH_IO_KEY = ''
 
@@ -686,26 +686,34 @@ FILE_UPLOAD_STORAGE_PREFIX = 'submissions_attachments'
 ############################ Modulestore Configuration ################################
 
 DOC_STORE_CONFIG = {
-    'db': 'edxapp',
+    'db': 'xmodule',
     'host': 'localhost',
-    'replicaSet': '',
-    'password': 'password',
-    'port': 27017,
-    'user': 'edxapp',
-    'collection': 'modulestore',
-    'ssl': False,
-    # https://api.mongodb.com/python/2.9.1/api/pymongo/mongo_client.html#module-pymongo.mongo_client
-    # default is never timeout while the connection is open,
-    #this means it needs to explicitly close raising pymongo.errors.NetworkTimeout
-    'socketTimeoutMS': 3000,
-    'connectTimeoutMS': 2000,  # default is 20000, I believe raises pymongo.errors.ConnectionFailure
-    # Not setting waitQueueTimeoutMS and waitQueueMultiple since pymongo defaults to nobody being allowed to wait
-    'auth_source': None,
-    'read_preference': 'PRIMARY'
+    'collection': 'modulestore'
     # If 'asset_collection' defined, it'll be used
     # as the collection name for asset metadata.
     # Otherwise, a default collection name will be used.
 }
+# DOC_STORE_CONFIG = {
+#     'db': 'edxapp',
+#     'host': 'localhost',
+#     'replicaSet': '',
+#     'password': 'password',
+#     'port': 27017,
+#     'user': 'edxapp',
+#     'collection': 'modulestore',
+#     'ssl': False,
+#     # https://api.mongodb.com/python/2.9.1/api/pymongo/mongo_client.html#module-pymongo.mongo_client
+#     # default is never timeout while the connection is open,
+#     #this means it needs to explicitly close raising pymongo.errors.NetworkTimeout
+#     'socketTimeoutMS': 3000,
+#     'connectTimeoutMS': 2000,  # default is 20000, I believe raises pymongo.errors.ConnectionFailure
+#     # Not setting waitQueueTimeoutMS and waitQueueMultiple since pymongo defaults to nobody being allowed to wait
+#     'auth_source': None,
+#     'read_preference': 'PRIMARY'
+#     # If 'asset_collection' defined, it'll be used
+#     # as the collection name for asset metadata.
+#     # Otherwise, a default collection name will be used.
+# }
 
 CONTENTSTORE = {
     'ENGINE': 'xmodule.contentstore.mongo.MongoContentStore',
@@ -1173,9 +1181,9 @@ CELERY_BROKER_TRANSPORT = 'amqp'
 CELERY_BROKER_HOSTNAME = 'localhost'
 CELERY_BROKER_USER = 'celery'
 CELERY_BROKER_PASSWORD = 'celery'
-CELERY_BROKER_VHOST = ''
-CELERY_BROKER_USE_SSL = False
-CELERY_EVENT_QUEUE_TTL = None
+# CELERY_BROKER_VHOST = ''
+# CELERY_BROKER_USE_SSL = False
+# CELERY_EVENT_QUEUE_TTL = None
 
 ############################## Video ##########################################
 
@@ -1436,7 +1444,7 @@ ACTIVATION_EMAIL_SUPPORT_LINK = ''
 
 ############################## EVENT TRACKING #################################
 
-CMS_SEGMENT_KEY = None
+# CMS_SEGMENT_KEY = None
 TRACK_MAX_EVENT = 50000
 
 TRACKING_BACKENDS = {
@@ -2082,42 +2090,42 @@ PROCTORING_BACKENDS = {
     # null is a language independent type in YAML
     'null': {}
 }
-PROCTORING_SETTINGS = {}
-
-################## BLOCKSTORE RELATED SETTINGS  #########################
-BLOCKSTORE_PUBLIC_URL_ROOT = 'http://localhost:18250'
-BLOCKSTORE_API_URL = 'http://localhost:18250/api/v1'
-
-###################### LEARNER PORTAL ################################
-LEARNER_PORTAL_URL_ROOT = 'https://learner-portal-localhost:18000'
-
-######################### MICROSITE ###############################
-MICROSITE_ROOT_DIR = '/edx/app/edxapp/edx-microsite'
-MICROSITE_CONFIGURATION = {}
-
-############################ JWT #################################
-JWT_ISSUER = 'http://127.0.0.1:8000/oauth2'
-DEFAULT_JWT_ISSUER = {
-    'ISSUER': 'http://127.0.0.1:8000/oauth2',
-    'AUDIENCE': 'SET-ME-PLEASE',
-    'SECRET_KEY': 'SET-ME-PLEASE'
-}
-JWT_EXPIRATION = 30
-JWT_PRIVATE_SIGNING_KEY = None
-
-
-SYSLOG_SERVER = ''
-FEEDBACK_SUBMISSION_EMAIL = ''
-REGISTRATION_EXTRA_FIELDS = {
-    'confirm_email': 'hidden',
-    'level_of_education': 'optional',
-    'gender': 'optional',
-    'year_of_birth': 'optional',
-    'mailing_address': 'optional',
-    'goals': 'optional',
-    'honor_code': 'required',
-    'terms_of_service': 'hidden',
-    'city': 'hidden',
-    'country': 'hidden',
-}
-EDXAPP_PARSE_KEYS = {}
+# PROCTORING_SETTINGS = {}
+#
+# ################## BLOCKSTORE RELATED SETTINGS  #########################
+# BLOCKSTORE_PUBLIC_URL_ROOT = 'http://localhost:18250'
+# BLOCKSTORE_API_URL = 'http://localhost:18250/api/v1'
+#
+# ###################### LEARNER PORTAL ################################
+# LEARNER_PORTAL_URL_ROOT = 'https://learner-portal-localhost:18000'
+#
+# ######################### MICROSITE ###############################
+# MICROSITE_ROOT_DIR = '/edx/app/edxapp/edx-microsite'
+# MICROSITE_CONFIGURATION = {}
+#
+# ############################ JWT #################################
+# JWT_ISSUER = 'http://127.0.0.1:8000/oauth2'
+# DEFAULT_JWT_ISSUER = {
+#     'ISSUER': 'http://127.0.0.1:8000/oauth2',
+#     'AUDIENCE': 'SET-ME-PLEASE',
+#     'SECRET_KEY': 'SET-ME-PLEASE'
+# }
+# JWT_EXPIRATION = 30
+# JWT_PRIVATE_SIGNING_KEY = None
+#
+#
+# SYSLOG_SERVER = ''
+# FEEDBACK_SUBMISSION_EMAIL = ''
+# REGISTRATION_EXTRA_FIELDS = {
+#     'confirm_email': 'hidden',
+#     'level_of_education': 'optional',
+#     'gender': 'optional',
+#     'year_of_birth': 'optional',
+#     'mailing_address': 'optional',
+#     'goals': 'optional',
+#     'honor_code': 'required',
+#     'terms_of_service': 'hidden',
+#     'city': 'hidden',
+#     'country': 'hidden',
+# }
+# EDXAPP_PARSE_KEYS = {}
