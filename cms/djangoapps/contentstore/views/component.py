@@ -123,12 +123,16 @@ def container_handler(request, usage_key_string):
             is_unit_page = is_unit(xblock)
             unit = xblock if is_unit_page else None
 
-            while parent and parent.category != 'course':
+            is_first = True
+            while parent:
                 if unit is None and is_unit(parent):
                     unit = parent
-
-                ancestor_xblocks.append((parent, parent.get_children()))
+                elif parent.category != 'sequential':
+                    current_block = {'block': parent, 'children': parent.get_children(), 'is_last': is_first}
+                    is_first = False
+                    ancestor_xblocks.append(current_block)
                 parent = get_parent_xblock(parent)
+
             ancestor_xblocks.reverse()
 
             assert unit is not None, "Could not determine unit page"
@@ -138,6 +142,22 @@ def container_handler(request, usage_key_string):
             section = get_parent_xblock(subsection)
             assert section is not None, "Could not determine ancestor section from unit " + six.text_type(unit.location)
 
+            prev_url = next_url = None
+            last_block = None
+            siblings = list(section.get_children())
+            for i, block in enumerate(siblings):
+                if block.location == subsection.location:
+                    if last_block:
+                        try:
+                            prev_url = '/container/%s' % last_block.get_children()[0].location
+                        except IndexError:
+                            pass
+                    try:
+                        next_url = '/container/%s' % siblings[i + 1].get_children()[0].location
+                    except IndexError:
+                        pass
+                    break
+                last_block = block
             # Fetch the XBlock info for use by the container page. Note that it includes information
             # about the block's ancestors and siblings for use by the Unit Outline.
             xblock_info = create_xblock_info(xblock, include_ancestor_info=is_unit_page)
@@ -163,6 +183,9 @@ def container_handler(request, usage_key_string):
                 'is_unit_page': is_unit_page,
                 'subsection': subsection,
                 'section': section,
+                'position': index,
+                'prev_url': prev_url,
+                'next_url': next_url,
                 'new_unit_category': 'vertical',
                 'outline_url': '{url}?format=concise'.format(url=reverse_course_url('course_handler', course.id)),
                 'ancestor_xblocks': ancestor_xblocks,

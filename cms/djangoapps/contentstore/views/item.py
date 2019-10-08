@@ -67,7 +67,7 @@ from xmodule.modulestore.exceptions import InvalidLocationError, ItemNotFoundErr
 from xmodule.modulestore.inheritance import own_metadata
 from xmodule.services import ConfigurationService, SettingsService
 from xmodule.tabs import CourseTabList
-from xmodule.x_module import DEPRECATION_VSCOMPAT_EVENT, PREVIEW_VIEWS, STUDENT_VIEW, STUDIO_VIEW
+from xmodule.x_module import AUTHOR_VIEW, DEPRECATION_VSCOMPAT_EVENT, PREVIEW_VIEWS, STUDENT_VIEW, STUDIO_VIEW
 from edx_proctoring.api import get_exam_configuration_dashboard_url, does_backend_support_onboarding
 from cms.djangoapps.contentstore.config.waffle import SHOW_REVIEW_RULES_FLAG
 
@@ -277,6 +277,7 @@ class StudioEditModuleRuntime(object):
     (i.e. whenever we're not using PreviewModuleSystem.) This is required to make information
     about the current user (especially permissions) available via services as needed.
     """
+
     def __init__(self, user):
         self._user = user
 
@@ -386,7 +387,7 @@ def xblock_view_handler(request, usage_key_string, view_name):
 
             # Set up the context to be passed to each XBlock's render method.
             context = {
-                'is_pages_view': is_pages_view,     # This setting disables the recursive wrapping of xblocks
+                'is_pages_view': is_pages_view or view_name == AUTHOR_VIEW,     # This setting disables the recursive wrapping of xblocks
                 'is_unit_page': is_unit(xblock),
                 'can_edit': can_edit,
                 'root_xblock': xblock if (view_name == 'container_preview') else None,
@@ -394,7 +395,7 @@ def xblock_view_handler(request, usage_key_string, view_name):
                 'paging': paging,
                 'force_render': force_render,
             }
-
+            context.update(request.GET.dict())
             fragment = get_preview_fragment(request, xblock, context)
 
             # Note that the container view recursively adds headers into the preview fragment,
