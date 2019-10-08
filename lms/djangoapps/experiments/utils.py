@@ -22,6 +22,7 @@ from openedx.core.djangoapps.django_comment_common.models import Role
 from openedx.core.djangoapps.waffle_utils import WaffleFlag, WaffleFlagNamespace
 from openedx.features.course_duration_limits.access import get_user_course_expiration_date
 from openedx.features.course_duration_limits.models import CourseDurationLimitConfig
+from openedx.features.discounts.applicability import can_receive_discount, discount_percentage
 from student.models import CourseEnrollment
 from xmodule.partitions.partitions_service import get_all_partitions_for_course, get_user_partition_groups
 
@@ -311,9 +312,14 @@ def get_base_experiment_metadata_context(course, user, enrollment, user_enrollme
     # upgrade_link and upgrade_date should be None if user has passed their dynamic pacing deadline.
     upgrade_link, upgrade_date = check_and_get_upgrade_link_and_date(user, enrollment, course)
 
+    is_first_purchase = can_receive_discount(user, course)
+    first_purchase_discount = discount_percentage()
+
     return {
         'upgrade_link': upgrade_link,
         'upgrade_price': six.text_type(get_cosmetic_verified_display_price(course)),
+        'is_first_purchase': is_first_purchase,
+        'first_purchase_discount_percentage': first_purchase_discount,
         'enrollment_mode': enrollment_mode,
         'enrollment_time': enrollment_time,
         'pacing_type': 'self_paced' if course.self_paced else 'instructor_paced',
