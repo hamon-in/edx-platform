@@ -141,7 +141,7 @@ if os.environ.get('DISABLE_MIGRATIONS'):
 
 LMS_BASE = "localhost:8000"
 LMS_ROOT_URL = "http://{}".format(LMS_BASE)
-FEATURES['PREVIEW_LMS_BASE'] = "preview.localhost:18000"
+FEATURES['PREVIEW_LMS_BASE'] = "preview.localhost"
 LOGIN_URL = EDX_ROOT_URL + '/signin'
 
 
