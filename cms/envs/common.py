@@ -315,7 +315,7 @@ FEATURES = {
     'ENABLE_GRADE_DOWNLOADS': True,
     'ENABLE_MKTG_SITE': False,
 
-    'ENABLE_THIRD_PARTY_AUTH': True,
+    # 'ENABLE_THIRD_PARTY_AUTH': True,
 
     'ENABLE_DISCUSSION_HOME_PANEL': True,
 
@@ -343,7 +343,11 @@ IDA_LOGOUT_URI_LIST = []
 ############################# SOCIAL MEDIA SHARING #############################
 SOCIAL_SHARING_SETTINGS = {
     # Note: Ensure 'CUSTOM_COURSE_URLS' has a matching value in lms/envs/common.py
-    'CUSTOM_COURSE_URLS': False
+    'CUSTOM_COURSE_URLS': False,
+    'DASHBOARD_FACEBOOK': False,
+    'CERTIFICATE_FACEBOOK': False,
+    'CERTIFICATE_TWITTER': False,
+    'DASHBOARD_TWITTER': False
 }
 
 SOCIAL_MEDIA_FOOTER_URLS = {}
