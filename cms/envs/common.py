@@ -687,9 +687,9 @@ DOC_STORE_CONFIG = {
     'db': 'xmodule',
     'host': 'localhost',
     'replicaSet': '',
-    'password': 'password',
+    # 'password': 'password',
+    # 'user': 'edxapp',
     'port': 27017,
-    'user': 'edxapp',
     'collection': 'modulestore',
     'ssl': False,
     # https://api.mongodb.com/python/2.9.1/api/pymongo/mongo_client.html#module-pymongo.mongo_client
@@ -712,10 +712,11 @@ CONTENTSTORE = {
     'OPTIONS': {
         'db': 'edxapp',
         'host': 'localhost',
-        'password': 'edxapp',
+        'password': 'password',
         'port': 27017,
         'user': 'edxapp',
-        'ssl': False
+        'ssl': False,
+        'auth_source': None
     },
     'ADDITIONAL_OPTIONS': {},
     'DOC_STORE_CONFIG': DOC_STORE_CONFIG
