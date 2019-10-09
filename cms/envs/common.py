@@ -549,6 +549,7 @@ CSRF_COOKIE_SECURE = False
 
 CROSS_DOMAIN_CSRF_COOKIE_DOMAIN = ''
 CROSS_DOMAIN_CSRF_COOKIE_NAME = ''
+CSRF_TRUSTED_ORIGINS = []
 
 #################### CAPA External Code Evaluation #############################
 XQUEUE_INTERFACE = {
@@ -640,6 +641,8 @@ MIDDLEWARE_CLASSES = [
     'openedx.core.djangoapps.site_configuration.middleware.SessionCookieDomainOverrideMiddleware',
 ]
 
+EXTRA_MIDDLEWARE_CLASSES = []
+
 # Clickjacking protection can be disabled by setting this to 'ALLOW'
 X_FRAME_OPTIONS = 'DENY'
 
@@ -672,7 +675,7 @@ XBLOCK_FIELD_DATA_WRAPPERS = ()
 ############################ ORA 2 ############################################
 
 # By default, don't use a file prefix
-ORA2_FILE_PREFIX = None
+ORA2_FILE_PREFIX = 'default_env-default_deployment/ora2'
 
 # Default File Upload Storage bucket and prefix. Used by the FileUpload Service.
 FILE_UPLOAD_STORAGE_BUCKET_NAME = 'SET-ME-PLEASE (ex. bucket-name)'
