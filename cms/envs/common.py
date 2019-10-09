@@ -687,9 +687,9 @@ DOC_STORE_CONFIG = {
     'db': 'xmodule',
     'host': 'localhost',
     'replicaSet': '',
-    # 'password': 'password',
-    # 'port': 27017,
-    # 'user': 'edxapp',
+    'password': 'password',
+    'port': 27017,
+    'user': 'edxapp',
     'collection': 'modulestore',
     'ssl': False,
     # https://api.mongodb.com/python/2.9.1/api/pymongo/mongo_client.html#module-pymongo.mongo_client

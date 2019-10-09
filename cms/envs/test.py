@@ -117,6 +117,8 @@ CONTENTSTORE = {
         'db': 'test_xcontent_{}'.format(THIS_UUID),
         'port': MONGO_PORT_NUM,
         'collection': 'dont_trip',
+        'password': 'password',
+        'user': 'edxapp',
     },
     # allow for additional options that can be keyed on a name, e.g. 'trashcan'
     'ADDITIONAL_OPTIONS': {
