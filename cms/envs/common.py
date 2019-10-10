@@ -855,7 +855,7 @@ GIT_REPO_EXPORT_DIR = '/edx/var/edxapp/export_course_repos'
 
 # Email
 TECH_SUPPORT_EMAIL = 'technical@example.com'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
@@ -889,7 +889,7 @@ STATICFILES_DIRS = [
 
 # Locale/Internationalization
 CELERY_TIMEZONE = 'UTC'
-TIME_ZONE = 'America/New_York'
+TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'en'  # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGES_BIDI = lms.envs.common.LANGUAGES_BIDI
 
@@ -1171,9 +1171,6 @@ CELERY_BROKER_TRANSPORT = 'amqp'
 CELERY_BROKER_HOSTNAME = 'localhost'
 CELERY_BROKER_USER = 'celery'
 CELERY_BROKER_PASSWORD = 'celery'
-CELERY_BROKER_VHOST = ''
-CELERY_BROKER_USE_SSL = False
-CELERY_EVENT_QUEUE_TTL = None
 
 ############################## Video ##########################################
 
@@ -1817,7 +1814,7 @@ OAUTH_ID_TOKEN_EXPIRATION = 5 * 60
 PARTNER_SUPPORT_EMAIL = ''
 
 # Affiliate cookie tracking
-AFFILIATE_COOKIE_NAME = 'dev_affiliate_id'
+AFFILIATE_COOKIE_NAME = 'affiliate_id'
 
 ############## Settings for Studio Context Sensitive Help ##############
 
@@ -1878,7 +1875,7 @@ MOBILE_STORE_URLS = {}
 RECALCULATE_GRADES_ROUTING_KEY = DEFAULT_PRIORITY_QUEUE
 
 # Queue to use for updating grades due to grading policy change
-POLICY_CHANGE_GRADES_ROUTING_KEY = 'edx.lms.core.default'
+POLICY_CHANGE_GRADES_ROUTING_KEY = DEFAULT_PRIORITY_QUEUE
 
 # Rate limit for regrading tasks that a grading policy change can kick off
 POLICY_CHANGE_TASK_RATE_LIMIT = '300/h'
@@ -1915,8 +1912,8 @@ VIDEO_IMAGE_ASPECT_RATIO_ERROR_MARGIN = 0.1
 
 ###################### ZENDESK ######################
 ZENDESK_URL = ''
-ZENDESK_USER = ''
-ZENDESK_API_KEY = ''
+ZENDESK_USER = None
+ZENDESK_API_KEY = None
 ZENDESK_CUSTOM_FIELDS = {}
 ZENDESK_OAUTH_ACCESS_TOKEN = ''
 # A mapping of string names to Zendesk Group IDs
@@ -1950,7 +1947,7 @@ ECOMMERCE_API_URL = 'http://localhost:8002/api/v2'
 ECOMMERCE_API_SIGNING_KEY = 'SET-ME-PLEASE'
 
 CREDENTIALS_INTERNAL_SERVICE_URL = 'http://localhost:8005'
-CREDENTIALS_PUBLIC_SERVICE_URL = 'http://localhost:8005'
+CREDENTIALS_PUBLIC_SERVICE_URL = None
 
 ANALYTICS_DASHBOARD_URL = 'http://localhost:18110/courses'
 ANALYTICS_DASHBOARD_NAME = 'Your Platform Name Here Insights'
@@ -2052,7 +2049,7 @@ SWIFT_TENANT_NAME = None
 SWIFT_AUTH_URL = None
 SWIFT_AUTH_VERSION = None
 SWIFT_REGION_NAME = None
-SWIFT_USE_TEMP_URLS = False
+SWIFT_USE_TEMP_URLS = None
 SWIFT_TEMP_URL_KEY = None
 SWIFT_TEMP_URL_DURATION = 1800  # seconds
 
