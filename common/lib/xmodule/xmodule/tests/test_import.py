@@ -570,7 +570,7 @@ class ImportTestCase(BaseCourseTestCase):
         ]
 
         self.assertTrue(any(
-            expect in msg or expect in err
+            expect in msg.decode('utf-8') or expect in err.decode('utf-8')
             for msg, err in errors
         ))
         chapters = course.get_children()

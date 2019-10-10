@@ -75,10 +75,7 @@ class TestPasswordReset(LoginEnrollmentTestCase):
             'new_password2': 'foo',
         }, follow=True)
 
-        self.assertNotIn(
-            success_msg,
-            resp.content
-        )
+        self.assertNotIn(success_msg, resp.content.decode('utf-8'))
 
         # try to reset password with a long enough password
         user = User.objects.get(email=staff_email)
