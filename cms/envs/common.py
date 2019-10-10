@@ -889,7 +889,7 @@ STATICFILES_DIRS = [
 
 # Locale/Internationalization
 CELERY_TIMEZONE = 'UTC'
-TIME_ZONE = 'America/New_York'
+TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'en'  # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGES_BIDI = lms.envs.common.LANGUAGES_BIDI
 
@@ -1434,6 +1434,7 @@ ACTIVATION_EMAIL_SUPPORT_LINK = ''
 
 ############################## EVENT TRACKING #################################
 
+CMS_SEGMENT_KEY = None
 TRACK_MAX_EVENT = 50000
 
 TRACKING_BACKENDS = {
