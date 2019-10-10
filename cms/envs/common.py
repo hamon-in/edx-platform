@@ -889,7 +889,7 @@ STATICFILES_DIRS = [
 
 # Locale/Internationalization
 CELERY_TIMEZONE = 'UTC'
-TIME_ZONE = 'America/New_York'
+TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'en'  # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGES_BIDI = lms.envs.common.LANGUAGES_BIDI
 
@@ -1171,9 +1171,6 @@ CELERY_BROKER_TRANSPORT = 'amqp'
 CELERY_BROKER_HOSTNAME = 'localhost'
 CELERY_BROKER_USER = 'celery'
 CELERY_BROKER_PASSWORD = 'celery'
-CELERY_BROKER_VHOST = ''
-CELERY_BROKER_USE_SSL = False
-CELERY_EVENT_QUEUE_TTL = None
 
 ############################## Video ##########################################
 
@@ -1434,7 +1431,6 @@ ACTIVATION_EMAIL_SUPPORT_LINK = ''
 
 ############################## EVENT TRACKING #################################
 
-CMS_SEGMENT_KEY = None
 TRACK_MAX_EVENT = 50000
 
 TRACKING_BACKENDS = {
