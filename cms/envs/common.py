@@ -2076,3 +2076,43 @@ PROCTORING_BACKENDS = {
     # null is a language independent type in YAML
     'null': {}
 }
+
+PROCTORING_SETTINGS = {}
+
+################## BLOCKSTORE RELATED SETTINGS  #########################
+BLOCKSTORE_PUBLIC_URL_ROOT = 'http://localhost:18250'
+BLOCKSTORE_API_URL = 'http://localhost:18250/api/v1'
+
+###################### LEARNER PORTAL ################################
+LEARNER_PORTAL_URL_ROOT = 'https://learner-portal-localhost:18000'
+
+######################### MICROSITE ###############################
+MICROSITE_ROOT_DIR = '/edx/app/edxapp/edx-microsite'
+MICROSITE_CONFIGURATION = {}
+
+############################ JWT #################################
+JWT_ISSUER = 'http://127.0.0.1:8000/oauth2'
+DEFAULT_JWT_ISSUER = {
+    'ISSUER': 'http://127.0.0.1:8000/oauth2',
+    'AUDIENCE': 'SET-ME-PLEASE',
+    'SECRET_KEY': 'SET-ME-PLEASE'
+}
+JWT_EXPIRATION = 30
+JWT_PRIVATE_SIGNING_KEY = None
+
+
+SYSLOG_SERVER = ''
+FEEDBACK_SUBMISSION_EMAIL = ''
+REGISTRATION_EXTRA_FIELDS = {
+    'confirm_email': 'hidden',
+    'level_of_education': 'optional',
+    'gender': 'optional',
+    'year_of_birth': 'optional',
+    'mailing_address': 'optional',
+    'goals': 'optional',
+    'honor_code': 'required',
+    'terms_of_service': 'hidden',
+    'city': 'hidden',
+    'country': 'hidden',
+}
+EDXAPP_PARSE_KEYS = {}
