@@ -1814,7 +1814,7 @@ OAUTH_ID_TOKEN_EXPIRATION = 5 * 60
 PARTNER_SUPPORT_EMAIL = ''
 
 # Affiliate cookie tracking
-AFFILIATE_COOKIE_NAME = 'affiliate_id'
+AFFILIATE_COOKIE_NAME = 'dev_affiliate_id'
 
 ############## Settings for Studio Context Sensitive Help ##############
 
@@ -1912,8 +1912,8 @@ VIDEO_IMAGE_ASPECT_RATIO_ERROR_MARGIN = 0.1
 
 ###################### ZENDESK ######################
 ZENDESK_URL = ''
-ZENDESK_USER = None
-ZENDESK_API_KEY = None
+ZENDESK_USER = ''
+ZENDESK_API_KEY = ''
 ZENDESK_CUSTOM_FIELDS = {}
 ZENDESK_OAUTH_ACCESS_TOKEN = ''
 # A mapping of string names to Zendesk Group IDs
@@ -1947,7 +1947,7 @@ ECOMMERCE_API_URL = 'http://localhost:8002/api/v2'
 ECOMMERCE_API_SIGNING_KEY = 'SET-ME-PLEASE'
 
 CREDENTIALS_INTERNAL_SERVICE_URL = 'http://localhost:8005'
-CREDENTIALS_PUBLIC_SERVICE_URL = None
+CREDENTIALS_PUBLIC_SERVICE_URL = 'http://localhost:8005'
 
 ANALYTICS_DASHBOARD_URL = 'http://localhost:18110/courses'
 ANALYTICS_DASHBOARD_NAME = 'Your Platform Name Here Insights'
@@ -2049,7 +2049,7 @@ SWIFT_TENANT_NAME = None
 SWIFT_AUTH_URL = None
 SWIFT_AUTH_VERSION = None
 SWIFT_REGION_NAME = None
-SWIFT_USE_TEMP_URLS = None
+SWIFT_USE_TEMP_URLS = False
 SWIFT_TEMP_URL_KEY = None
 SWIFT_TEMP_URL_DURATION = 1800  # seconds
 
