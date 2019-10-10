@@ -21,7 +21,7 @@ from __future__ import absolute_import, division
 import os
 os.environ["OPENBLAS_NUM_THREADS"] = "1"    # See TNL-6456
 
-import random as random_module
+import random2 as random_module
 import sys
 random = random_module.Random(%r)
 random.Random = random_module.Random
