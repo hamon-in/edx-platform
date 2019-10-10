@@ -37,6 +37,7 @@ from waffle.testutils import override_switch
 from common.test.utils import XssTestMixin
 from course_modes.models import CourseMode
 from course_modes.tests.factories import CourseModeFactory
+from common.utils import json_loads
 from lms.djangoapps.commerce.models import CommerceConfiguration
 from lms.djangoapps.commerce.tests import TEST_API_URL, TEST_PAYMENT_DATA, TEST_PUBLIC_URL_ROOT
 from lms.djangoapps.commerce.utils import EcommerceService
@@ -1637,7 +1638,7 @@ class TestSubmitPhotosForVerification(TestCase):
     def _get_post_data(self):
         """Retrieve POST data from the last request. """
         last_request = moto.packages.httpretty.last_request()
-        return json.loads(last_request.body)
+        return json_loads(last_request.body)
 
 
 class TestPhotoVerificationResultsCallback(ModuleStoreTestCase):

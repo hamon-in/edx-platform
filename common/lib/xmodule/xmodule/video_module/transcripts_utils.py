@@ -25,6 +25,7 @@ from xmodule.contentstore.content import StaticContent
 from xmodule.contentstore.django import contentstore
 from xmodule.exceptions import NotFoundError
 
+from common.utils import json_loads
 from .bumper_utils import get_bumper_settings
 
 try:
@@ -676,12 +677,12 @@ class Transcript(object):
         if input_format == 'sjson':
 
             if output_format == 'txt':
-                text = json.loads(content)['text']
+                text = json_loads(content)['text']
                 text_without_none = [line if line else '' for line in text]
                 return HTMLParser().unescape("\n".join(text_without_none))
 
             elif output_format == 'srt':
-                return generate_srt_from_sjson(json.loads(content), speed=1.0)
+                return generate_srt_from_sjson(json_loads(content), speed=1.0)
 
     @staticmethod
     def asset(location, subs_id, lang='en', filename=None):

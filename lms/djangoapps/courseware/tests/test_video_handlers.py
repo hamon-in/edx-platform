@@ -19,6 +19,7 @@ from mock import MagicMock, Mock, patch
 from webob import Request, Response
 
 from common.test.utils import normalize_repr
+from common.utils import json_loads
 from openedx.core.djangoapps.contentserver.caching import del_cached_content
 from xmodule.contentstore.content import StaticContent
 from xmodule.contentstore.django import contentstore
@@ -256,7 +257,7 @@ class TestTranscriptAvailableTranslationsDispatch(TestVideo):
 
         request = Request.blank('/available_translations')
         response = self.item.transcript(request=request, dispatch='available_translations')
-        self.assertEqual(json.loads(response.body), ['en'])
+        self.assertEqual(json_loads(response.body), ['en'])
 
     def test_available_translation_non_en(self):
         _upload_file(_create_srt_file(), self.item_descriptor.location, os.path.split(self.srt_file.name)[1])
@@ -416,7 +417,7 @@ class TestTranscriptAvailableTranslationsBumperDispatch(TestVideo):
 
         request = Request.blank('/' + self.dispatch)
         response = self.item.transcript(request=request, dispatch=self.dispatch)
-        self.assertEqual(json.loads(response.body), [lang])
+        self.assertEqual(json_loads(response.body), [lang])
 
     @patch('xmodule.video_module.transcripts_utils.get_available_transcript_languages')
     def test_multiple_available_translations(self, mock_get_transcript_languages):
@@ -617,7 +618,7 @@ class TestTranscriptTranslationGetDispatch(TestVideo):
         attach(self.item, subs_id)
         request = Request.blank(url.format(subs_id))
         response = self.item.transcript(request=request, dispatch=dispatch)
-        self.assertDictEqual(json.loads(response.body), subs)
+        self.assertDictEqual(json_loads(response.body), subs)
 
     def test_translation_non_en_youtube_success(self):
         subs = {
@@ -637,7 +638,7 @@ class TestTranscriptTranslationGetDispatch(TestVideo):
         self.store.update_item(self.item, self.user.id)
         request = Request.blank('/translation/uk?videoId={}'.format(subs_id))
         response = self.item.transcript(request=request, dispatch='translation/uk')
-        self.assertDictEqual(json.loads(response.body), subs)
+        self.assertDictEqual(json_loads(response.body), subs)
 
         # 0_75 subs are exist
         request = Request.blank('/translation/uk?videoId={}'.format('0_75'))
@@ -650,7 +651,7 @@ class TestTranscriptTranslationGetDispatch(TestVideo):
             ]
         }
 
-        self.assertDictEqual(json.loads(response.body), calculated_0_75)
+        self.assertDictEqual(json_loads(response.body), calculated_0_75)
         # 1_5 will be generated from 1_0
         self.item.youtube_id_1_5 = '1_5'
         self.store.update_item(self.item, self.user.id)
@@ -663,7 +664,7 @@ class TestTranscriptTranslationGetDispatch(TestVideo):
                 u'\u041f\u0440\u0438\u0432\u0456\u0442, edX \u0432\u0456\u0442\u0430\u0454 \u0432\u0430\u0441.'
             ]
         }
-        self.assertDictEqual(json.loads(response.body), calculated_1_5)
+        self.assertDictEqual(json_loads(response.body), calculated_1_5)
 
     @ddt.data(
         ('translation/en', 'translation/en', attach_sub),
@@ -678,7 +679,7 @@ class TestTranscriptTranslationGetDispatch(TestVideo):
         self.store.update_item(self.item, self.user.id)
         request = Request.blank(url)
         response = self.item.transcript(request=request, dispatch=dispatch)
-        self.assertDictEqual(json.loads(response.body), TRANSCRIPT)
+        self.assertDictEqual(json_loads(response.body), TRANSCRIPT)
 
     def test_translaton_non_en_html5_success(self):
         subs = {
@@ -695,7 +696,7 @@ class TestTranscriptTranslationGetDispatch(TestVideo):
         self.item.youtube_id_1_0 = ""
         request = Request.blank('/translation/uk')
         response = self.item.transcript(request=request, dispatch='translation/uk')
-        self.assertDictEqual(json.loads(response.body), subs)
+        self.assertDictEqual(json_loads(response.body), subs)
 
     def test_translation_static_transcript_xml_with_data_dirc(self):
         """

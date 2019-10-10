@@ -11,6 +11,7 @@ from django.urls import reverse
 from six import text_type
 from six.moves import range
 
+from common.utils import json_loads
 from lms.djangoapps.courseware.tests.factories import GlobalStaffFactory
 from lms.djangoapps.courseware.tests.helpers import LoginEnrollmentTestCase
 from openedx.core.lib.url_utils import quote_slashes
@@ -150,7 +151,7 @@ class TestHinterFunctions(TestCrowdsourceHinter):
         result = self.call_event('get_hint', {'submittedanswer': 'ans=incorrect+answer+1'}, 'crowdsourcehinter')
         expected = {'BestHint': 'Sorry, there are no hints for this answer.', 'StudentAnswer': 'incorrect answer 1',
                     'HintCategory': False}
-        self.assertEqual(json.loads(result.content), expected)
+        self.assertEqual(json_loads(result.content), expected)
 
     def test_add_new_hint(self):
         """
@@ -162,7 +163,7 @@ class TestHinterFunctions(TestCrowdsourceHinter):
         result = self.call_event('add_new_hint', data)
         expected = {'success': True,
                     'result': 'Hint added'}
-        self.assertEqual(json.loads(result.content), expected)
+        self.assertEqual(json_loads(result.content), expected)
 
     def test_get_hint(self):
         """
@@ -175,7 +176,7 @@ class TestHinterFunctions(TestCrowdsourceHinter):
         result = self.call_event('get_hint', {'submittedanswer': 'ans=incorrect+answer+1'})
         expected = {'BestHint': 'new hint for answer 1', 'StudentAnswer': 'incorrect answer 1',
                     'HintCategory': 'ErrorResponse'}
-        self.assertEqual(json.loads(result.content), expected)
+        self.assertEqual(json_loads(result.content), expected)
 
     def test_rate_hint_upvote(self):
         """
@@ -192,7 +193,7 @@ class TestHinterFunctions(TestCrowdsourceHinter):
         }
         expected = {'success': True}
         result = self.call_event('rate_hint', data)
-        self.assertEqual(json.loads(result.content), expected)
+        self.assertEqual(json_loads(result.content), expected)
 
     def test_rate_hint_downvote(self):
         """
@@ -209,7 +210,7 @@ class TestHinterFunctions(TestCrowdsourceHinter):
         }
         expected = {'success': True}
         result = self.call_event('rate_hint', data)
-        self.assertEqual(json.loads(result.content), expected)
+        self.assertEqual(json_loads(result.content), expected)
 
     def test_report_hint(self):
         """
@@ -226,7 +227,7 @@ class TestHinterFunctions(TestCrowdsourceHinter):
         }
         expected = {'rating': 'reported', 'hint': 'new hint for answer 1'}
         result = self.call_event('rate_hint', data)
-        self.assertEqual(json.loads(result.content), expected)
+        self.assertEqual(json_loads(result.content), expected)
 
     def test_dont_show_reported_hint(self):
         """
@@ -245,7 +246,7 @@ class TestHinterFunctions(TestCrowdsourceHinter):
         result = self.call_event('get_hint', {'submittedanswer': 'ans=incorrect+answer+1'})
         expected = {'BestHint': 'Sorry, there are no hints for this answer.', 'StudentAnswer': 'incorrect answer 1',
                     'HintCategory': False}
-        self.assertEqual(json.loads(result.content), expected)
+        self.assertEqual(json_loads(result.content), expected)
 
     def test_get_used_hint_answer_data(self):
         """
@@ -260,7 +261,7 @@ class TestHinterFunctions(TestCrowdsourceHinter):
         self.call_event('get_hint', {'submittedanswer': 'ans=incorrect+answer+1'})
         result = self.call_event('get_used_hint_answer_data', "")
         expected = {'new hint for answer 1': 'incorrect answer 1'}
-        self.assertEqual(json.loads(result.content), expected)
+        self.assertEqual(json_loads(result.content), expected)
 
     def test_show_best_hint(self):
         """
