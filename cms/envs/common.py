@@ -314,7 +314,7 @@ FEATURES = {
     'PREVIEW_LMS_BASE': "preview.localhost:18000",
     'ENABLE_GRADE_DOWNLOADS': True,
     'ENABLE_MKTG_SITE': False,
-    'ENABLE_THIRD_PARTY_AUTH': True,
+    # 'ENABLE_THIRD_PARTY_AUTH': True,
     'ENABLE_DISCUSSION_HOME_PANEL': True,
     'ENABLE_COMBINED_LOGIN_REGISTRATION': True,
     'ENABLE_CORS_HEADERS': False,
@@ -680,7 +680,8 @@ FILE_UPLOAD_STORAGE_PREFIX = 'submissions_attachments'
 ############################ Modulestore Configuration ################################
 
 DOC_STORE_CONFIG = {
-    'db': 'xmodule',
+    # 'db': 'xmodule',
+    'db': 'edxapp',
     'host': 'localhost',
     'replicaSet': '',
     # 'password': 'password',
