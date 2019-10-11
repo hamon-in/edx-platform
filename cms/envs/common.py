@@ -680,12 +680,11 @@ FILE_UPLOAD_STORAGE_PREFIX = 'submissions_attachments'
 ############################ Modulestore Configuration ################################
 
 DOC_STORE_CONFIG = {
-    # 'db': 'xmodule',
     'db': 'edxapp',
     'host': 'localhost',
     'replicaSet': '',
     # 'password': 'password',
-    # 'user': 'edxapp',
+    'user': 'edxapp',
     'port': 27017,
     'collection': 'modulestore',
     'ssl': False,
